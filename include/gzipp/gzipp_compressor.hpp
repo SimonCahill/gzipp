@@ -227,16 +227,16 @@ namespace gzipp {
 
         // Check the Gzip magic number
         return (
-            input.size() >= 2 &&
+            input.size() >= 2 && (
+                // Zlib Magic Number
+                (
+                    input[0] == '\x78' && (input[1] == 0x01 || input[1] == 0x9c || input[1] == 0xda || input[1] == 0x5e)
+                ) ||
 
-            // Zlib Magic Number
-            (
-                input[0] == '\x78' && (input[1] == 0x01 || input[1] == 0x9c || input[1] == 0xda || input[1] == 0x5e)
-            ) ||
-
-            // Gzip Magic Number
-            (
-                input[0] == '\x1f' && input[1] == '\x8b'
+                // Gzip Magic Number
+                (
+                    input[0] == '\x1f' && input[1] == '\x8b'
+                )
             )
         );
     }
